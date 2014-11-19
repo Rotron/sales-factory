@@ -14,11 +14,11 @@ angular.module('sales').config(['$stateProvider',
 			templateUrl: 'modules/sales/views/create-sale.client.view.html'
 		}).
 		state('viewSale', {
-			url: '/sales/:saleId',
+			url: '/sales/:cnpj',
 			templateUrl: 'modules/sales/views/view-sale.client.view.html'
 		}).
 		state('editSale', {
-			url: '/sales/:saleId/edit',
+			url: '/sales/:cnpj/edit',
 			templateUrl: 'modules/sales/views/edit-sale.client.view.html'
 		});
 	}

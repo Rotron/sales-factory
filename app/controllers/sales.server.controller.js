@@ -83,13 +83,40 @@ exports.list = function(req, res) { Sale.find().sort('-created').populate('user'
 	});
 };
 
+var index = 0;
 /**
  * Sale middleware
  */
-exports.saleByID = function(req, res, next, id) { Sale.findById(id).populate('user', 'displayName').exec(function(err, sale) {
+exports.saleByID = function(req, res, next, id) { Sale.findOne({cnpj: id}).populate('user', 'displayName').exec(function(err, sale) {
 		if (err) return next(err);
-		if (! sale) return next(new Error('Failed to load Sale ' + id));
-		req.sale = sale ;
+		//if (! sale) return next(new Error('Failed to load Sale ' + id));
+
+	if(!sale) {
+
+		var len = Math.floor((Math.random() * 20) + 1);
+		var products = [];
+		for(var i=0; i<len; i++) {
+			products.push(
+				{
+					"id:" : Math.floor((Math.random() * 30) + 1),
+					"name":"Meu produto " + Math.floor((Math.random() * 100) + 1),
+					"qnt": Math.floor((Math.random() * 100) + 1),
+					"price":"R$ " + Math.floor((Math.random() * 100) + 1) + ",00"
+				}
+			)
+
+		}
+		var sales_mock = {
+			"products": products,
+			"address":"Endereço da Rua Teste Número: " + Math.floor((Math.random() * 100) + 1),
+			"cnpj":id,
+			"name":"Cliente Nome " + Math.floor((Math.random() * 100) + 1)
+		};
+
+		sale = sales_mock;
+	}
+
+		req.sale = sale;
 		next();
 	});
 };

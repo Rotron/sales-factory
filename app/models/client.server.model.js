@@ -7,28 +7,14 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 /**
- * Sale Schema
+ * Client Schema
  */
-var SaleSchema = new Schema({
+var ClientSchema = new Schema({
 	name: {
 		type: String,
 		default: '',
 		required: 'Please fill Client name',
 		trim: true
-	},
-	cnpj: {
-		type: String,
-		default: '',
-		required: 'Please fill CNPJ'
-	},
-	address: {
-		type: String,
-		default: '',
-		required: 'Please fill ADDRESS'
-	},
-	products: {
-		type: Array,
-		required: 'Please fill Products'
 	},
 	created: {
 		type: Date,
@@ -40,4 +26,4 @@ var SaleSchema = new Schema({
 	}
 });
 
-mongoose.model('Sale', SaleSchema);
+mongoose.model('Client', ClientSchema);

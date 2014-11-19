@@ -1,9 +1,10 @@
 <section data-ng-controller="SalesController" data-ng-init="findOne()">
 	<div class="page-header">
 		<h1 data-ng-bind="sale.name"></h1>
+		<h4 data-ng-bind="sale.cnpj"></h1>
 	</div>
-	<div class="pull-right" data-ng-show="authentication.user._id == sale.user._id">
-		<a class="btn btn-primary" href="/#!/sales/{{sale._id}}/edit">
+	<div class="pull-right">
+		<a class="btn btn-primary" href="/#!/sales/{{sale.cnpj}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
 		<a class="btn btn-primary" data-ng-click="remove();">

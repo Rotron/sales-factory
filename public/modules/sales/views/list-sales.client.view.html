@@ -3,14 +3,15 @@
         <h1>Sales</h1>
     </div>
     <div class="list-group">
-        <a data-ng-repeat="sale in sales" data-ng-href="#!/sales/{{sale._id}}" class="list-group-item">
+        <a data-ng-repeat="sale in sales" data-ng-href="#!/sales/{{sale.cnpj}}" class="list-group-item">
 			<small class="list-group-item-text">
 				Posted on
 				<span data-ng-bind="sale.created | date:'medium'"></span>
 				by
 				<span data-ng-bind="sale.user.displayName"></span>
 			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="sale.name"></h4>
+			<h3 class="list-group-item-heading" data-ng-bind="sale.name"></h3>
+			<h6 class="list-group-item-heading" data-ng-bind="sale.cnpj"></h6>
         </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!sales.$resolved || sales.length">

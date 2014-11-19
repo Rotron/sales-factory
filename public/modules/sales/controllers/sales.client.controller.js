@@ -1,20 +1,51 @@
 'use strict';
 
 // Sales controller
-angular.module('sales').controller('SalesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Sales',
-	function($scope, $stateParams, $location, Authentication, Sales ) {
+angular.module('sales').controller('SalesController', ['$scope', '$stateParams', '$location', '$http', 'Authentication', 'Sales',
+	function($scope, $stateParams, $location, $http, Authentication, Sales ) {
 		$scope.authentication = Authentication;
+		$scope.user = {};
+		$scope.product = {};
+		$scope.products = [];
+		$scope.sales = {
+			name: '',
+			qnt: '',
+			cnpj: '',
+			products: []
+		};
+
+		console.log($scope.sale);
+
+
+		$scope.addProduct = function(product) {
+			$scope.sales.products.push(product);
+			$scope.product = {};
+		};
+
+		$scope.create = function() {
+			$http.post('/sales', $scope.sales).success(function(response) {
+				$location.path('sales/' + response.cnpj);
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
 
 		// Create new Sale
-		$scope.create = function() {
+		$scope.create2 = function() {
 			// Create new Sale object
 			var sale = new Sales ({
-				name: this.name
+				name: this.name,
+				cnpj: this.cnpj,
+				address: this.address,
+				qnt: this.qnt,
+				price: this.price,
+				products: this.products
 			});
+
 
 			// Redirect after save
 			sale.$save(function(response) {
-				$location.path('sales/' + response._id);
+				$location.path('sales/' + response.cnpj);
 
 				// Clear form fields
 				$scope.name = '';
@@ -56,9 +87,18 @@ angular.module('sales').controller('SalesController', ['$scope', '$stateParams',
 		};
 
 		// Find existing Sale
-		$scope.findOne = function() {
+		$scope.findOne3 = function() {
 			$scope.sale = Sales.get({ 
-				saleId: $stateParams.saleId
+				cnpj: $stateParams.cnpj
+			});
+		};
+
+		$scope.findOne = function() {
+			$http.get('/sales/' + $stateParams.cnpj).success(function(response) {
+				$scope.sale = response;
+				console.log($scope.sale);
+			}).error(function(response) {
+				$scope.error = response.message;
 			});
 		};
 	}
