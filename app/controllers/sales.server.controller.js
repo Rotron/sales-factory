@@ -107,6 +107,7 @@ exports.saleByID = function(req, res, next, id) { Sale.findOne({cnpj: id}).popul
 
 		}
 		var sales_mock = {
+			"sales_num": Math.floor((Math.random() * 1000) + 1),
 			"products": products,
 			"address":"Endereço da Rua Teste Número: " + Math.floor((Math.random() * 100) + 1),
 			"cnpj":id,
